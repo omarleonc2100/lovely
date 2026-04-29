@@ -2,14 +2,14 @@ import { motion } from 'framer-motion'
 import { Plus, Instagram } from 'lucide-react'
 
 const galleryImages = [
-  { src: '/images/galeria-01.jpg', alt: 'Producto Lovely A', gradientFrom: '#7AAB75', gradientTo: '#4A7A5A' },
-  { src: '/images/galeria-02.jpg', alt: 'Colección Hello Kitty', gradientFrom: '#F5C030', gradientTo: '#E8A020' },
-  { src: '/images/galeria-03.jpg', alt: 'Stitch Collection', gradientFrom: '#7EC3D9', gradientTo: '#4A8AAA' },
-  { src: '/images/galeria-04.jpg', alt: 'Set de regalo', gradientFrom: '#9B8ECC', gradientTo: '#6B5B9E' },
-  { src: '/images/galeria-05.jpg', alt: 'Tienda Lovely A', gradientFrom: '#C73B2A', gradientTo: '#902B1E' },
-  { src: '/images/galeria-06.jpg', alt: 'Peluches', gradientFrom: '#5AAA78', gradientTo: '#3A7A58' },
-  { src: '/images/galeria-07.jpg', alt: 'Tazas y termos', gradientFrom: '#F5A623', gradientTo: '#C07018' },
-  { src: '/images/galeria-08.jpg', alt: 'Mochilas escolares', gradientFrom: '#E8B4C4', gradientTo: '#C07890' },
+  { src: '/images/galeria-01.png', alt: 'Producto Lovely A', gradientFrom: '#7AAB75', gradientTo: '#4A7A5A' },
+  { src: '/images/galeria-02.png', alt: 'Colección Hello Kitty', gradientFrom: '#F5C030', gradientTo: '#E8A020' },
+  { src: '/images/galeria-03.png', alt: 'Stitch Collection', gradientFrom: '#7EC3D9', gradientTo: '#4A8AAA' },
+  { src: '/images/galeria-04.png', alt: 'Set de regalo', gradientFrom: '#9B8ECC', gradientTo: '#6B5B9E' },
+  { src: '/images/galeria-05.png', alt: 'Tienda Lovely A', gradientFrom: '#C73B2A', gradientTo: '#902B1E' },
+  { src: '/images/galeria-06.png', alt: 'Peluches', gradientFrom: '#5AAA78', gradientTo: '#3A7A58' },
+  { src: '/images/galeria-07.png', alt: 'Tazas y termos', gradientFrom: '#F5A623', gradientTo: '#C07018' },
+  { src: '/images/galeria-08.png', alt: 'Mochilas escolares', gradientFrom: '#E8B4C4', gradientTo: '#C07890' },
 ]
 
 /* Small Woodstock SVG for placeholder */

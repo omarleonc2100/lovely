@@ -12,7 +12,7 @@ const navLinks = [
 const socials = [
   { icon: Instagram,     href: 'https://www.instagram.com/l.lovelya/',    label: 'Instagram' },
   { icon: Facebook,      href: 'https://www.facebook.com/lovelya.tienda', label: 'Facebook' },
-  { icon: MessageCircle, href: 'https://wa.me/5255137417737',              label: 'WhatsApp' },
+  { icon: MessageCircle, href: 'https://wa.me/5215513741737',              label: 'WhatsApp' },
 ]
 
 /* Mini Snoopy doghouse logo SVG */

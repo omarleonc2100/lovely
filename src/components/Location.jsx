@@ -39,8 +39,8 @@ export default function Location() {
             <div className="flex flex-col gap-4 mb-8">
               {[
                 { Icon: MapPin,         color: '#4A7A5A', text: 'Calle Miguel Lira y Ortega No. 3-Loc 1 Y 2, Centro, 90000 Tlaxcala de Xicohténcatl, Tlax., México' },
-                { Icon: Phone,          color: '#4A7A5A', text: '+52 55 137 41 737', href: 'tel:+5255137417737' },
-                { Icon: MessageCircle,  color: '#25D366', text: '+52 55 137 41 737 (WhatsApp)', href: 'https://wa.me/5255137417737' },
+                { Icon: Phone,          color: '#4A7A5A', text: '+52 1 55 1374 1737', href: 'tel:+5215513741737' },
+                { Icon: MessageCircle,  color: '#25D366', text: '+52 1 55 1374 1737 (WhatsApp)', href: 'https://wa.me/5215513741737' },
               ].map(({ Icon, color, text, href }) => (
                 <div key={text} className="flex items-start gap-3.5">
                   <div className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: color + '18' }}>

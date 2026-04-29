@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CheckCircle, Send } from 'lucide-react'
+import { CheckCircle, MessageCircle, ChevronDown } from 'lucide-react'
 
 const asuntos = [
   'Consulta sobre productos',
@@ -10,22 +10,52 @@ const asuntos = [
   'Otro',
 ]
 
+const countryCodes = [
+  { code: '+52', flag: '🇲🇽', label: 'México' },
+  { code: '+1',  flag: '🇺🇸', label: 'EUA' },
+  { code: '+1',  flag: '🇨🇦', label: 'Canadá' },
+  { code: '+34', flag: '🇪🇸', label: 'España' },
+  { code: '+57', flag: '🇨🇴', label: 'Colombia' },
+  { code: '+54', flag: '🇦🇷', label: 'Argentina' },
+  { code: '+56', flag: '🇨🇱', label: 'Chile' },
+  { code: '+51', flag: '🇵🇪', label: 'Perú' },
+]
+
 const inputBase =
   'w-full font-inter text-[13px] text-charming placeholder-warm-gray/40 bg-cream border border-peanuts-green/15 focus:border-peanuts-green rounded-xl px-4 py-3.5 outline-none transition-all duration-200'
 
+function buildWhatsAppMessage({ nombre, countryCode, telefono, asunto, mensaje }) {
+  const lines = [
+    `Hola, Lovely A`,
+    ``,
+    `*Nombre:* ${nombre}`,
+    `*Teléfono:* ${countryCode} ${telefono}`,
+    `*Asunto:* ${asunto}`,
+    ``,
+    `*Mensaje:*`,
+    mensaje,
+    ``,
+    `Quedo en espera de su respuesta. ¡Gracias!`,
+  ]
+  return encodeURIComponent(lines.join('\n'))
+}
+
 export default function Contact() {
-  const [form, setForm] = useState({ nombre: '', email: '', asunto: '', mensaje: '' })
+  const [form, setForm] = useState({ nombre: '', countryCode: '+52', telefono: '', asunto: '', mensaje: '' })
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault()
     setLoading(true)
-    await new Promise(r => setTimeout(r, 900))
-    setLoading(false)
-    setSubmitted(true)
+    const text = buildWhatsAppMessage(form)
+    setTimeout(() => {
+      window.open(`https://wa.me/5215513741737?text=${text}`, '_blank')
+      setLoading(false)
+      setSubmitted(true)
+    }, 600)
   }
 
   return (
@@ -47,7 +77,7 @@ export default function Contact() {
             Cuéntanos cómo podemos ayudarte
           </h2>
           <p className="font-inter text-[14px] text-warm-gray">
-            Te responderemos en 24 horas
+            Te responderemos por WhatsApp a la brevedad
           </p>
         </motion.div>
 
@@ -71,16 +101,16 @@ export default function Contact() {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: 'spring', stiffness: 250, damping: 18, delay: 0.1 }}
-                  className="flex items-center justify-center w-16 h-16 rounded-full bg-peanuts-green/12 mx-auto mb-5"
+                  className="flex items-center justify-center w-16 h-16 rounded-full bg-[#25D366]/12 mx-auto mb-5"
                 >
-                  <CheckCircle size={32} className="text-peanuts-green" />
+                  <CheckCircle size={32} className="text-[#25D366]" />
                 </motion.div>
-                <h3 className="font-poppins font-bold text-[20px] text-charming mb-2">Mensaje enviado</h3>
+                <h3 className="font-poppins font-bold text-[20px] text-charming mb-2">WhatsApp abierto</h3>
                 <p className="font-inter text-[13px] text-warm-gray">
-                  Nos pondremos en contacto pronto. ¡Gracias por escribirnos!
+                  Tu mensaje fue preparado. ¡Envíalo y te responderemos pronto!
                 </p>
                 <button
-                  onClick={() => { setSubmitted(false); setForm({ nombre: '', email: '', asunto: '', mensaje: '' }) }}
+                  onClick={() => { setSubmitted(false); setForm({ nombre: '', countryCode: '+52', telefono: '', asunto: '', mensaje: '' }) }}
                   className="mt-5 font-inter text-[12px] font-semibold text-peanuts-green hover:underline"
                 >
                   Enviar otro mensaje
@@ -92,17 +122,44 @@ export default function Contact() {
                 onSubmit={handleSubmit}
                 className="peanuts-card p-6 sm:p-8 flex flex-col gap-5"
               >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="font-quicksand text-[10px] font-semibold text-warm-gray uppercase tracking-widest mb-1.5 block">Nombre</label>
-                    <input type="text" name="nombre" required value={form.nombre} onChange={handleChange} placeholder="Tu nombre" className={inputBase} />
-                  </div>
-                  <div>
-                    <label className="font-quicksand text-[10px] font-semibold text-warm-gray uppercase tracking-widest mb-1.5 block">Email</label>
-                    <input type="email" name="email" required value={form.email} onChange={handleChange} placeholder="tu@correo.com" className={inputBase} />
+                {/* Nombre */}
+                <div>
+                  <label className="font-quicksand text-[10px] font-semibold text-warm-gray uppercase tracking-widest mb-1.5 block">Nombre</label>
+                  <input type="text" name="nombre" required value={form.nombre} onChange={handleChange} placeholder="Tu nombre completo" className={inputBase} />
+                </div>
+
+                {/* Phone with country code */}
+                <div>
+                  <label className="font-quicksand text-[10px] font-semibold text-warm-gray uppercase tracking-widest mb-1.5 block">Teléfono</label>
+                  <div className="flex gap-2">
+                    <div className="relative flex-shrink-0">
+                      <select
+                        name="countryCode"
+                        value={form.countryCode}
+                        onChange={handleChange}
+                        className="appearance-none font-inter text-[13px] text-charming bg-cream border border-peanuts-green/15 focus:border-peanuts-green rounded-xl pl-3 pr-8 py-3.5 outline-none transition-all duration-200 cursor-pointer"
+                      >
+                        {countryCodes.map((c, i) => (
+                          <option key={`${c.code}-${i}`} value={c.code}>
+                            {c.flag} {c.code}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-warm-gray pointer-events-none" />
+                    </div>
+                    <input
+                      type="tel"
+                      name="telefono"
+                      required
+                      value={form.telefono}
+                      onChange={handleChange}
+                      placeholder="55 1234 5678"
+                      className={`${inputBase} flex-1`}
+                    />
                   </div>
                 </div>
 
+                {/* Asunto */}
                 <div>
                   <label className="font-quicksand text-[10px] font-semibold text-warm-gray uppercase tracking-widest mb-1.5 block">Asunto</label>
                   <select name="asunto" required value={form.asunto} onChange={handleChange} className={`${inputBase} cursor-pointer`}>
@@ -111,22 +168,23 @@ export default function Contact() {
                   </select>
                 </div>
 
+                {/* Mensaje */}
                 <div>
                   <label className="font-quicksand text-[10px] font-semibold text-warm-gray uppercase tracking-widest mb-1.5 block">Mensaje</label>
-                  <textarea name="mensaje" required rows={4} value={form.mensaje} onChange={handleChange} placeholder="Cuéntanos qué buscas..." className={`${inputBase} resize-none`} />
+                  <textarea name="mensaje" required rows={4} value={form.mensaje} onChange={handleChange} placeholder="Cuéntanos qué buscas o en qué podemos ayudarte..." className={`${inputBase} resize-none`} />
                 </div>
 
                 <motion.button
                   type="submit"
                   disabled={loading}
-                  className="flex items-center justify-center gap-2 w-full font-inter text-[14px] font-semibold text-cream-light bg-peanuts-green rounded-full py-4 mt-1 transition-all duration-200 disabled:opacity-70"
-                  whileHover={!loading ? { scale: 1.02, boxShadow: '0 4px 20px rgba(74,122,90,0.35)' } : {}}
+                  className="flex items-center justify-center gap-2.5 w-full font-inter text-[14px] font-semibold text-white bg-[#25D366] rounded-full py-4 mt-1 transition-all duration-200 disabled:opacity-70"
+                  whileHover={!loading ? { scale: 1.02, boxShadow: '0 4px 20px rgba(37,211,102,0.35)' } : {}}
                   whileTap={!loading ? { scale: 0.98 } : {}}
                 >
                   {loading ? (
                     <motion.div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full" animate={{ rotate: 360 }} transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }} />
                   ) : (
-                    <> Enviar mensaje <Send size={14} /> </>
+                    <> <MessageCircle size={15} /> Enviar por WhatsApp </>
                   )}
                 </motion.button>
               </motion.form>

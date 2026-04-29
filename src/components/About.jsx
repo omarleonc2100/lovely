@@ -155,7 +155,7 @@ export default function About() {
                 </p>
               </div>
               <img
-                src="/images/tienda-interior.jpg"
+                src="/images/tienda-interior.png"
                 alt="Interior de Lovely A"
                 className="relative z-10 w-full h-full min-h-[400px] object-cover"
                 loading="lazy"
